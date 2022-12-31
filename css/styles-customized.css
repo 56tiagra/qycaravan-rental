@@ -1,0 +1,9 @@
+header.large .brand {
+  width: 75%;
+}
+.pick-up > label {
+  line-height: 31px;
+}
+.service-box {
+  min-height: 230px;
+}
