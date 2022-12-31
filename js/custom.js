@@ -355,7 +355,7 @@ $( "#contact-form" ).submit(function() {
 // Car Select Form
 //-------------------------------------------------------------------------------
 
-$( "#car-select-form" ).submit(function() {
+$( "#car-select-form-button" ).click(function() {
 
   var selectedCar = $("#car-select").find(":selected").text();
   var selectedCarVal = $("#car-select").find(":selected").val();
