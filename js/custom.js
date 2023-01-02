@@ -111,7 +111,11 @@ $(".vehicle-data-select").change(function(){
   return false;
 });
 
-
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
 
 // Initialize Datepicker
 //-------------------------------------------------------------------------------
@@ -123,17 +127,15 @@ var checkin = $('#pick-up-date').datepicker({
         return date.valueOf() < now.valueOf() ? 'disabled' : '';
     }
 }).on('changeDate', function (ev) {
-    if (ev.date.valueOf() > checkout.date.valueOf()) {
         var newDate = new Date(ev.date)
-        newDate.setDate(newDate.getDate());
+        newDate.setDate(newDate.addDays(3).getDate());
         checkout.setValue(newDate);
-    }
     checkin.hide();
     $('#drop-off-date')[0].focus();
 }).data('datepicker');
 var checkout = $('#drop-off-date').datepicker({
     onRender: function (date) {
-        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        return date.valueOf() <= checkin.date.addDays(2).valueOf() ? 'disabled' : '';
     }
 }).on('changeDate', function (ev) {
     checkout.hide();
