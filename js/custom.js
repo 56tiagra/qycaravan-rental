@@ -11,7 +11,7 @@ var companyName = "Car Rental Station"; // Enter your event title
 
 $('.my-tooltip').tooltip();
 
-
+emailjs.init('1aIwl9oqParTGeD-V')
 
 // Initialize jQuery Placeholder  
 //-------------------------------------------------------------
@@ -270,47 +270,6 @@ $('.autocomplete-location').autocomplete({
 
 
 
-// Newsletter Form
-//-------------------------------------------------------------------------------
-
-$( "#newsletter-form" ).submit(function() {
-
-  $('#newsletter-form-msg').addClass('hidden');
-  $('#newsletter-form-msg').removeClass('alert-success');
-  $('#newsletter-form-msg').removeClass('alert-danger');
-
-  $('#newsletter-form input[type=submit]').attr('disabled', 'disabled');
-
-  $.ajax({
-    type: "POST",
-    url: "php/index.php",
-    data: $("#newsletter-form").serialize(),
-    dataType: "json",
-    success: function(data) {
-
-      if('success' == data.result)
-      {
-        $('#newsletter-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').addClass('alert-success');
-        $('#newsletter-form-msg').html(data.msg[0]);
-        $('#newsletter-form input[type=submit]').removeAttr('disabled');
-        $('#newsletter-form')[0].reset();
-      }
-
-      if('error' == data.result)
-      {
-        $('#newsletter-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').addClass('alert-danger');
-        $('#newsletter-form-msg').html(data.msg[0]);
-        $('#newsletter-form input[type=submit]').removeAttr('disabled');
-      }
-
-    }
-  });
-
-  return false;
-});
-
-
-
 // Contact Form
 //-------------------------------------------------------------------------------
 
@@ -396,11 +355,11 @@ $( "#car-select-form-button" ).click(function() {
     
     $("#pick-up-date-ph").html(pickUpDate);
     $("#pick-up-time-ph").html(pickUpTime);
-    $("#pick-up").val(pickUpDate+' at '+pickUpTime);
+    $("#_pickup").val(pickUpDate+' at '+pickUpTime);
 
     $("#drop-off-date-ph").html(dropOffDate);
     $("#drop-off-time-ph").html(dropOffTime);
-    $("#drop-off").val(dropOffDate+' at '+dropOffTime);
+    $("#_dropoff").val(dropOffDate+' at '+dropOffTime);
 
     $('#checkoutModal').modal();
   }
@@ -425,39 +384,27 @@ $( "#checkout-form" ).submit(function() {
 
   $('#checkout-form input[type=submit]').attr('disabled', 'disabled');
 
-  $.ajax({
-    type: "POST",
-    url: "php/index.php",
-    data: $("#checkout-form").serialize(),
-    dataType: "json",
-    success: function(data) {
+  var serviceID = 'default_service';
+  var templateID = 'template_qeavp92';
 
-      if('success' == data.result)
-      {
-        $('#checkout-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').addClass('alert-success');
-        $('#checkout-form-msg').html(data.msg[0]);
-        $('#checkout-form input[type=submit]').removeAttr('disabled');
+  emailjs.sendForm(serviceID, templateID, this)
+   .then(() => {
+    $('#checkout-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').addClass('alert-success');
+    $('#checkout-form input[type=submit]').removeAttr('disabled');
 
-        setTimeout(function(){
-          $('.modal').modal('hide');
-          $('#checkout-form-msg').addClass('hidden');
-          $('#checkout-form-msg').removeClass('alert-success');
+    setTimeout(function(){
+      $('.modal').modal('hide');
+      $('#checkout-form-msg').addClass('hidden');
+      $('#checkout-form-msg').removeClass('alert-success');
 
-          $('#checkout-form')[0].reset();
-          $('#car-select-form')[0].reset();
-        }, 5000);
-
-      }
-
-      if('error' == data.result)
-      {
-        $('#checkout-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').addClass('alert-danger');
-        $('#checkout-form-msg').html(data.msg[0]);
-        $('#checkout-form input[type=submit]').removeAttr('disabled');
-      }
-
-    }
-  });
+      $('#checkout-form')[0].reset();
+      $('#car-select-form')[0].reset();
+    }, 5000);
+   }, (err) => {
+    $('#checkout-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').addClass('alert-danger');
+    $('#checkout-form-msg').html(err);
+    $('#checkout-form input[type=submit]').removeAttr('disabled');
+   });
 
 return false;
 });
