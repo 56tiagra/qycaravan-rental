@@ -371,6 +371,26 @@ $( "#car-select-form-button" ).click(function() {
   return false;
 });
 
+$( "#btn-reserve" ).click(function() {
+
+  var firstName = $("#_firstname").val();
+  var lastName = $("#_lastname").val();
+  var email = $("#_emailaddress").val();
+  var phone = $("#_phonenumber").val();
+
+  var error = 0;
+
+  if(validateNotEmpty(firstName)) { error = 1; }
+  if(validateNotEmpty(lastName)) { error = 1; }
+  if(validateNotEmpty(email)) { error = 1; }
+  if(validateNotEmpty(phone)) { error = 1; }
+
+  if (error > 0)
+  {
+    $('#checkout-info-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').delay(2000).fadeOut();
+    return false;
+  }
+});
 
 
 // Check Out Form
