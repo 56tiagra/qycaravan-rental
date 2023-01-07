@@ -7,3 +7,6 @@ header.large .brand {
 .service-box {
   min-height: 230px;
 }
+.vehicle-data table {
+  font-size: 18px;
+}

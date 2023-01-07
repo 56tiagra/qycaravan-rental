@@ -128,14 +128,14 @@ var checkin = $('#pick-up-date').datepicker({
     }
 }).on('changeDate', function (ev) {
         var newDate = new Date(ev.date)
-        newDate.setDate(newDate.addDays(3).getDate());
+        newDate.setDate(newDate.getDate());
         checkout.setValue(newDate);
     checkin.hide();
     $('#drop-off-date')[0].focus();
 }).data('datepicker');
 var checkout = $('#drop-off-date').datepicker({
     onRender: function (date) {
-        return date.valueOf() <= checkin.date.addDays(2).valueOf() ? 'disabled' : '';
+        return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
     }
 }).on('changeDate', function (ev) {
     checkout.hide();
@@ -329,7 +329,7 @@ $( "#car-select-form-button" ).click(function() {
   var dropOffTime = $("#drop-off-time").val();
 
   var error = 0;
-
+  if(validateNotEmpty(selectedCarImage)) { error = 1; }
   if(validateNotEmpty(pickupLocation)) { error = 1; }
   if(validateNotEmpty(pickUpDate)) { error = 1; }
   if(validateNotEmpty(dropOffDate)) { error = 1; }
