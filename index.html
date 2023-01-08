@@ -294,7 +294,7 @@
                         name="pick-up-date"
                         id="pick-up-date"
                         class="form-control datepicker"
-                        placeholder="mm/dd/yyyy"
+                        placeholder="dd/mm/yyyy"
                       />
                     </div>
                   </div>
@@ -344,7 +344,7 @@
                         name="drop-off-date"
                         id="drop-off-date"
                         class="form-control datepicker"
-                        placeholder="mm/dd/yyyy"
+                        placeholder="dd/mm/yyyy"
                       />
                     </div>
                   </div>
@@ -1245,7 +1245,10 @@
     <!--<![endif]-->
 <!-- CDN example (jsDelivr) -->
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-<script>dayjs().format()</script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/plugin/customParseFormat.js"></script>
+<script>
+  dayjs.extend(window.dayjs_plugin_customParseFormat)
+</script>
     <script src="js/custom.js"></script>
   </body>
 </html>

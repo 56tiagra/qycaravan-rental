@@ -123,6 +123,7 @@ var nowTemp = new Date();
 var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
 var checkin = $('#pick-up-date').datepicker({
+    format: 'dd/mm/yyyy',
     onRender: function (date) {
         return date.valueOf() < now.valueOf() ? 'disabled' : '';
     }
@@ -134,6 +135,7 @@ var checkin = $('#pick-up-date').datepicker({
     $('#drop-off-date')[0].focus();
 }).data('datepicker');
 var checkout = $('#drop-off-date').datepicker({
+    format: 'dd/mm/yyyy',
     onRender: function (date) {
         return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
     }
@@ -311,7 +313,25 @@ $( "#contact-form" ).submit(function() {
   return false;
 });
 
+var priceList = {
+  'GENPOD (Ella)': {
+    weekday: 129,
+    weekdayMultiple: 109,
+    weekend: 209,
+    weekendMultiple: 159
+  },
+  'GENPOD (Leo)': {
+    weekday: 139,
+    weekdayMultiple: 119,
+    weekend: 219,
+    weekendMultiple: 169
+  },
+}
 
+
+function priceCalculator(model, pickupDate, pickupTime, dropoffDate, dropoffTime) {
+  
+}
 
 // Car Select Form
 //-------------------------------------------------------------------------------
