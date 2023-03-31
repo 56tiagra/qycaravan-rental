@@ -317,14 +317,20 @@ var priceList = {
   'GENPOD (Ella)': {
     weekday: 129,
     weekdayMultiple: 109,
-    weekend: 209,
+    weekend: 179,
     weekendMultiple: 159
   },
+    'GENPOD (Upgrade Ella)': {
+    weekday: 149,
+    weekdayMultiple: 129,
+    weekend: 199,
+    weekendMultiple: 179
+  },
   'GENPOD (Leo)': {
-    weekday: 139,
-    weekdayMultiple: 119,
-    weekend: 219,
-    weekendMultiple: 169
+    weekday: 179,
+    weekdayMultiple: 159,
+    weekend: 229,
+    weekendMultiple: 209
   },
 }
 
