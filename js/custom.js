@@ -315,22 +315,22 @@ $( "#contact-form" ).submit(function() {
 
 var priceList = {
   'GENPOD (Ella)': {
-    weekday: 129,
-    weekdayMultiple: 109,
-    weekend: 179,
-    weekendMultiple: 159
+    weekday: 109,
+    weekdayMultiple: 89,
+    weekend: 129,
+    weekendMultiple: 109
   },
     'GENPOD (Upgrade Ella)': {
-    weekday: 149,
-    weekdayMultiple: 129,
-    weekend: 199,
-    weekendMultiple: 179
+    weekday: 119,
+    weekdayMultiple: 99,
+    weekend: 139,
+    weekendMultiple: 119
   },
   'GENPOD (Leo)': {
-    weekday: 179,
+    weekday: 169,
     weekdayMultiple: 159,
-    weekend: 229,
-    weekendMultiple: 209
+    weekend: 189,
+    weekendMultiple: 169
   },
 }
 
@@ -365,6 +365,7 @@ $( "#car-select-form-button" ).click(function() {
 
     $("#selected-car-ph").html(selectedCar);
     $("#selected-car").val(selectedCar);
+    $("#_model").val(selectedCar);
     $("#selected-vehicle-image").attr('src', selectedCarImage);
 
     $("#pickup-location-ph").html(pickupLocation);
