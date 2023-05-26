@@ -334,9 +334,82 @@ var priceList = {
   },
 }
 
+// australia public holidays dates list for 2023 and 2024 array in the format of dd/mm/yyyy
+var publicHolidays = [
+  '01/01/2023',
+  '02/01/2023',
+  '26/01/2023',
+  '27/01/2023',
+  '10/04/2023',
+  '25/04/2023',
+  '12/06/2023',
+  '02/10/2023',
+  '25/12/2023',
+  '26/12/2023',
+  '01/01/2024',
+  '02/01/2024',
+  '28/01/2024',
+  '29/01/2024',
+  '25/03/2024',
+  '10/04/2024',
+  '25/04/2024',
+  '10/06/2024',
+  '07/10/2024',
+  '25/12/2024',
+  '26/12/2024'
+];
 
-function priceCalculator(model, pickupDate, pickupTime, dropoffDate, dropoffTime) {
-  
+// Function that takes in the model and the dates and returns the price, 
+// consider the public holidays, the public holiday price is the same as the weekend price?
+// the input dates are in the format of dd/mm/yyyy
+function priceCalculator(model, pickupDate, dropoffDate) {
+  // calculate the number of days between the pickup date and dropoff date
+  model = model.trim();
+  // dateformat: dd/mm/yyyy
+  var date1 = convertDate(pickupDate);
+  var date2 = convertDate(dropoffDate);
+  var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+  var numberOfDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+
+  // calculate the number of weekdays and weekends between the pickup date and dropoff date
+  var weekdays = 0;
+  var weekends = 0;
+  var currentDate = date1;
+  while (currentDate <= date2) {
+    // check if the current date is a weekend
+    if (currentDate.getDay() == 0 || currentDate.getDay() == 6) {
+      weekends++;
+    } else {
+      weekdays++;
+    }
+    // move the current date to the next day
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  // calculate the number of public holidays between the pickup date and dropoff date
+  var publicHolidaysCount = 0;
+  for (var i = 0; i < publicHolidays.length; i++) {
+    var publicHoliday = new Date(publicHolidays[i]);
+    if (publicHoliday >= date1 && publicHoliday <= date2) {
+      publicHolidaysCount++;
+    }
+  }
+
+  // calculate the total price
+  var totalPrice = 0;
+  if (publicHolidaysCount > 0) {
+    totalPrice = priceList[model].weekday * weekdays + priceList[model].weekend * weekends + priceList[model].weekend * publicHolidaysCount;
+  } else {
+    totalPrice = priceList[model].weekday * weekdays + priceList[model].weekend * weekends;
+  }
+
+  return totalPrice;
+}
+
+function convertDate(date) {
+  var dateArray = date.split('/');
+  var newDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+  return new Date(newDate);
 }
 
 // Car Select Form
@@ -389,7 +462,12 @@ $( "#car-select-form-button" ).click(function() {
     $("#drop-off-date-ph").html(dropOffDate);
     $("#drop-off-time-ph").html(dropOffTime);
     $("#_dropoff").val(dropOffDate+' at '+dropOffTime);
-
+    // calculate the price and display it
+    var totalPrice = priceCalculator(selectedCar, pickUpDate, dropOffDate);
+    $("#rental-fee").html(totalPrice);
+    $("#total-price").html(totalPrice + 50);
+    $("#_rentalFee").val(totalPrice);
+    $("#_totalAmount").val(totalPrice + 50);
     $('#checkoutModal').modal();
   }
   else
