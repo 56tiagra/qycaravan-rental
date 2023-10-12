@@ -504,7 +504,6 @@ $( "#btn-reserve" ).click(function() {
 //-------------------------------------------------------------------------------
 
 $( "#checkout-form" ).submit(function() {
-
   $('#checkout-form-msg').addClass('hidden');
   $('#checkout-form-msg').removeClass('alert-success');
   $('#checkout-form-msg').removeClass('alert-danger');
@@ -526,7 +525,7 @@ $( "#checkout-form" ).submit(function() {
 
       $('#checkout-form')[0].reset();
       $('#car-select-form')[0].reset();
-    }, 5000);
+    }, 3000);
    }, (err) => {
     $('#checkout-form-msg').css('visibility','visible').hide().fadeIn().removeClass('hidden').addClass('alert-danger');
     $('#checkout-form-msg').html(err);
